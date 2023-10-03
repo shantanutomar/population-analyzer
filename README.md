@@ -12,9 +12,6 @@ With the given set of data the application will analyze the data and provide the
 * Terraform - Infrastructure as code
 * AWS - Cloud provider
 
-## Architecture
-![Architecture](./architecture.png)
-
 ## Storing geospatial data from S3 in the PostgreSQL database
 * The geo spatial data is huge and the states and individuals are stored in different tables.
 * The states are stored in the table `states` and the individuals are stored in the table `individuals`.
@@ -23,6 +20,9 @@ With the given set of data the application will analyze the data and provide the
 * The script `scripts/data_dump.sql` is used to load the data from the files into the database.
 * When running with `docker compose`, the script is run automatically and the data is loaded in the database initially when the container is created.
 * The initial load of data takes around 1hr to complete.
+
+## Open API specification
+* The open API specification for the application can be found [here](https://app.swaggerhub.com/apis/shantanutomar/population-analyzer/1.0.0).
 
 ## How to run the application using docker compose in local machine
 * Clone the [repository](git@github.com:shantanutomar/population-analyzer.git)
