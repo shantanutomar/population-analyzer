@@ -43,7 +43,7 @@ LOCAL_DB_PORT=5433
 and consist of 2 images `population-analyze-api` and `population-analyze-db`.
 * Once the containers are up, the application can be run at `http://localhost:3000/`.
 
-![Screenshot 2023-10-03 at 5.33.29 PM.png](https://ibb.co/3Yg16VS)
+![Screenshot 2023-10-03 at 5.33.29 PM.png](https://i.ibb.co/wr5yG8p/Screenshot-2023-10-03-at-5-33-29-PM.png)
 
 ## Build docker images locally
 * There are 2 docker files in the project each to build the image for the api and the database.
@@ -56,7 +56,8 @@ and consist of 2 images `population-analyze-api` and `population-analyze-db`.
 * The docker image for the `database` can be found [here](https://hub.docker.com/r/shantanutomar/population-analyze-db-repo).
 
 
-## Host the application in AWS
+## Deploy the application in AWS
+### Pre-requisites
 * The application can be hosted in AWS using terraform as IAAC.
 * The `main.tf` file in the root directory of the project contains the terraform code to create the infrastructure in AWS.
 * Create a `terraform.tfvars` file in the root directory of the project and add the following variables.
@@ -87,7 +88,30 @@ variable "postgres_database" {
 }
 ```
 * Make sure you have terraform installed in your local machine and logged in to your AWS account
-with correct AWS credentials.
+  with correct AWS credentials.
+
+### Steps to deploy the ECR repos and upload images
+* At first the images for the api and the database needs to be uploaded to the ECR repos.
+* Below code `main.tf` file in the root directory of the project 
+contains the terraform code to create the ECR repos.
+```
+#Configure the AWS ECR Provider for API
+resource "aws_ecr_repository" "population-analyzer-api-repo" {
+  name = "population-analyzer-api-repo"
+}
+
+#Configure the AWS ECR Provider for DB
+resource "aws_ecr_repository" "population-analyzer-db-repo" {
+  name = "population-analyzer-db-repo"
+}
+```
+* Leaving above code, comment out the rest of the code in the `main.tf` file.
 * Run `terraform init` in the root directory of the project.
 * Run `terraform apply` in the root directory of the project.
-* This will create the infrastructure in AWS and deploy the application in AWS.
+* This will create the ECR repos in AWS.
+* Follow the steps on AWS console to upload the images to the ECR repos using `View push commands`.
+
+### Steps to deploy the rest of the infrastructure in AWS.
+* Once the images are uploaded to the ECR repos, uncomment all the code in the `main.tf` file.
+* Run `terraform apply` in the root directory of the project.
+* This will create the rest of the infrastructure in AWS.
