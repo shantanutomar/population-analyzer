@@ -39,9 +39,11 @@ LOCAL_DB_PORT=5433
 ```
 * Run `docker-compose up -d` in the root directory of the project.
 * This will take some time to build the images and run the containers in the background. As the geospatial data is huge, it will take ¬1hr to load the data in the database.
-* Verify in docker desktop that the container `population-analyze` is up and running
+* Verify in docker desktop that the container `population-analyzer` is up and running
 and consist of 2 images `population-analyze-api` and `population-analyze-db`.
 * Once the containers are up, the application can be run at `http://localhost:3000/`.
+
+![Screenshot 2023-10-03 at 5.33.29 PM.png](https://ibb.co/3Yg16VS)
 
 ## Build docker images locally
 * There are 2 docker files in the project each to build the image for the api and the database.
@@ -50,8 +52,8 @@ and consist of 2 images `population-analyze-api` and `population-analyze-db`.
 
 ## Docker images in docker hub
 * The docker images are also available in docker hub.
-* The docker image for the `api` can be found [here](https://hub.docker.com/repository/docker/shantanutomar/population-analyze-api).
-* The docker image for the `database` can be found [here](https://hub.docker.com/repository/docker/shantanutomar/population-analyze-db).
+* The docker image for the `api` can be found [here](https://hub.docker.com/r/shantanutomar/population-analyze-api-repo).
+* The docker image for the `database` can be found [here](https://hub.docker.com/r/shantanutomar/population-analyze-db-repo).
 
 
 ## Host the application in AWS
@@ -83,7 +85,9 @@ variable "postgres_database" {
   type = string
   description = "postgres password"
 }
-```    
+```
+* Make sure you have terraform installed in your local machine and logged in to your AWS account
+with correct AWS credentials.
 * Run `terraform init` in the root directory of the project.
 * Run `terraform apply` in the root directory of the project.
 * This will create the infrastructure in AWS and deploy the application in AWS.
