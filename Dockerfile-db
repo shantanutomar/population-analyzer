@@ -1,0 +1,11 @@
+#using the postgis image from dockerhub
+FROM postgis/postgis
+
+#setting the DB volumne to /data/db
+VOLUME /data/db
+
+#Copy the S3 files to the container
+COPY ./dataFromS3/* /dataFromS3/
+
+#Copy the SQL scripts to the container
+COPY ./scripts/* /docker-entrypoint-initdb.d/

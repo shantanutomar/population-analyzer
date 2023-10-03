@@ -1,0 +1,35 @@
+version: '3.8'
+services:
+  api:
+    container_name: population-analyze-api
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile-api
+    ports:
+      - ${PORT}:${PORT}
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - .:/app
+
+  db:
+    container_name: population-analyze-db
+    build:
+      context: .
+      dockerfile: Dockerfile-db
+    ports:
+      - '${LOCAL_DB_PORT}:${POSTGRES_PORT}'
+    volumes:
+      - data:/data/db
+      - .:/data/db
+    environment:
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DATABASE}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      timeout: 5s
+
+volumes:
+  data: {}
