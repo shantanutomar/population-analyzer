@@ -115,3 +115,17 @@ resource "aws_ecr_repository" "population-analyzer-db-repo" {
 * Once the images are uploaded to the ECR repos, uncomment all the code in the `main.tf` file.
 * Run `terraform apply` in the root directory of the project.
 * This will create the rest of the infrastructure in AWS.
+
+## Future improvements
+* Performance improvement - The application can be improved to provide better performance.
+Right now, the API is not performant enough to handle large data. For example, if we try to get the list 
+of individuals living in Rajasthan it takes approx 20 mins. There are already indexes created on the tables on geometry 
+columns but still the performance is not good enough. The performance can be improved by using the following techniques:
+    * Using `materialized views` - The materialized views can be used to store the results of the queries and 
+    then the results can be fetched from the materialized views instead of querying the tables directly.
+    * Using `caching` - Redis cache can be implemented. The results of the queries can be cached and then the results can be fetched from the cache.
+    * Using `sharding` - The data can be sharded and stored in different databases and then the results can be fetched from the different databases.
+* Sequelize - Sequelize can be used as ORM to interact with the database instead of using raw queries. This will make the code more readable and maintainable.
+* Unit + Integration tests - Unit tests can be written for the application.
+* Security - The application can be made more secure by using the following techniques:
+    * Using `JWT` - JWT can be used for authentication and authorization.
