@@ -19,7 +19,7 @@ With the given set of data the application will analyze the data and provide the
 * The huge `individuals.csv` file is split into smaller 25 files and stored in the folder `dataFromS3`.
 * The script `scripts/data_dump.sql` is used to load the data from the files into the database.
 * When running with `docker compose`, the script is run automatically and the data is loaded in the database initially when the container is created.
-* The initial load of data takes around 1hr to complete.
+* The initial data load takes around approx 4hr to complete which loads 5 Million records.
 
 ## Open API specification
 * The open API specification for the application can be found [here](https://app.swaggerhub.com/apis/shantanutomar/population-analyzer/1.0.0).
@@ -119,7 +119,7 @@ resource "aws_ecr_repository" "population-analyzer-db-repo" {
 ## Future improvements
 * Performance improvement - The application can be improved to provide better performance.
 Right now, the API is not performant enough to handle large data. For example, if we try to get the list 
-of individuals living in Rajasthan it takes approx 20 mins. There are already indexes created on the tables on geometry 
+of individuals living in Rajasthan(one of the heavily populated) it takes approx `7sec`. There are already indexes created on the tables on geometry 
 columns but still the performance is not good enough. The performance can be improved by using the following techniques:
     * Using `materialized views` - The materialized views can be used to store the results of the queries and 
     then the results can be fetched from the materialized views instead of querying the tables directly.

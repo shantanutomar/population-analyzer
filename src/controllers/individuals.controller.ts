@@ -16,7 +16,7 @@ import {IndividualsResponse} from "../dto/individuals.response.js";
 const getIndividualsInState = async (req: Request, res: Response): Promise<void> => {
 
     const stateId = req.params.stateId;
-    const getIndividualsInStateQuery = `SELECT * FROM individuals WHERE ST_Within(location, (SELECT geometry FROM states WHERE shape_id = '${stateId}'))`;
+    const getIndividualsInStateQuery = `SELECT * FROM individuals WHERE state_id = '${stateId}'`;
 
     console.log('getIndividualsInStateQuery', getIndividualsInStateQuery);
 

@@ -3,6 +3,7 @@ export interface IndividualsEntity {
     first_name: string;
     last_name: string;
     location: string;
+    state_id: string;
 }
 
 
